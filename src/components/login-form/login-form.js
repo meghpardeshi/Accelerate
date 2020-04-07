@@ -1,6 +1,8 @@
 import React from "react";
 import "./login-form.css"
 import { Container, Row, Col } from "react-bootstrap";
+import TextField from "@material-ui/core/TextField";
+import image from "./logo192.png";
 import {Link} from 'react-router-dom';
 import {Redirect} from "react-router";
 import { connect } from "react-redux";
@@ -97,56 +99,50 @@ handleCheck=()=>{
                 <Container>
                     <Row>
                         <Col>
-                            A demo column
+                            <img src={image}/>
                 </Col>
                         <Col>
-                        <form className="form-signin" onSubmit={this.handleOnSubmit}>
-                  <div className="form-label-group">
-                    <input
+                        <form className="form-signin container-fluid" onSubmit={this.handleOnSubmit}>
+                  <div className="form-group">
+                  <TextField
                       type="email"
                       id="inputEmail"
                       name="email"
-                      className="form-control"
-                      placeholder="UserName"
+                      label="User Email"
                       onChange={this.handleOnChange}
                       required
                       autoFocus
                     />
-                    <label htmlFor="inputEmail">Email Id</label>
-                   
-                  </div>
+                   </div>
                   {formErrors.email.length > 0 && (
               <span className="errorMessage">{formErrors.email}</span>
             )}
 
-                  <div className="form-label-group">
-                    <input
+                  <div className="form-group">
+                  <TextField
                       type="password"
                       id="inputPassword"
                       name="password"
                       onChange={this.handleOnChange}
-                      className="form-control"
-                      placeholder="Password"
+                      label="Password"
                       required
                     />
-                    <label htmlFor="inputPassword">Password</label>
                   </div>
                   {formErrors.password.length > 0 && (
               <span className="errorMessage">{formErrors.password}</span>
             )}
-                  <div className="custom-control custom-checkbox mb-3">
+                  <div className="text-left">
                     <input
                       type="checkbox"
-                      className="custom-control-input"
                       id="customCheck1"
-                    />
+                    /> {' '}
                     <label
-                      className="custom-control-label"
                       htmlFor="customCheck1"
                     >
-                      Remember password
+                       Remember Password
                     </label>
-                  </div>
+                    </div>
+                  <br/>
                   <button
                     className="btn btn-lg btn-primary btn-block text-uppercase"
                     type="submit"

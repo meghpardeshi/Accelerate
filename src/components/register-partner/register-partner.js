@@ -1,4 +1,4 @@
-
+import TextField from "@material-ui/core/TextField";
 import React from 'react';
 import history from "../../history";
 import "./register-partner.css";
@@ -108,10 +108,10 @@ export  default class registerPartner extends React.Component{
         formErrors.firstName =
           value.length < 3 ? "minimum 3 characaters required" : "";
         break;
-      case "lastName":
-        formErrors.lastName =
-          value.length < 3 ? "minimum 3 characaters required" : "";
-        break;
+      // case "lastName":
+      //   formErrors.lastName =
+      //     value.length < 3 ? "minimum 3 characaters required" : "";
+      //   break;
       case "email":
         formErrors.email = emailRegex.test(value)
           ? ""
@@ -147,11 +147,11 @@ export  default class registerPartner extends React.Component{
         <form onSubmit={this.handleSubmit} noValidate 
         id="registerPartner" 
         name="registerPartner" enctype="multipart/form-data">
-          <div className="firstName">
-            <label htmlFor="firstName">First Name</label>
-            <input
+          <div className="email">
+            {/* <label htmlFor="firstName">First Name</label> */}
+            <TextField
               className={formErrors.firstName.length > 0 ? "error" : null}
-              placeholder="First Name"
+              label="Full Name"
               type="text"
               name="firstName"
               noValidate
@@ -162,7 +162,7 @@ export  default class registerPartner extends React.Component{
               <span className="errorMessage">{formErrors.firstName}</span>
             )}
           </div>
-          <div className="lastName">
+          {/* <div className="lastName">
             <label htmlFor="lastName">Last Name</label>
             <input
               className={formErrors.lastName.length > 0 ? "error" : null}
@@ -175,15 +175,16 @@ export  default class registerPartner extends React.Component{
             {formErrors.lastName.length > 0 && (
               <span className="errorMessage">{formErrors.lastName}</span>
             )}
-          </div>
+          </div> */}
           <div className="email">
-            <label htmlFor="email">Email</label>
-            <input
+            {/* <label htmlFor="email">Email</label> */}
+            <TextField
               className={formErrors.email.length > 0 ? "error" : null}
-              placeholder="Email"
+              label="Email"
               type="email"
               name="email"
               noValidate
+              required
               onChange={this.handleChange}
             />
             {formErrors.email.length > 0 && (
@@ -191,13 +192,14 @@ export  default class registerPartner extends React.Component{
             )}
           </div>
           <div className="phoneNumber">
-            <label htmlFor="phoneNumber">Mobile Number</label>
-            <input
+            {/* <label htmlFor="phoneNumber">Mobile Number</label> */}
+            <TextField
               className={formErrors.phoneNumber.length > 0 ? "error" : null}
-              placeholder="Mobile Number"
+              label="Mobile Number"
               type="text"
               name="phoneNumber"
               noValidate
+              required
               onChange={this.handleChange}
             />
             {formErrors.email.length > 0 && (
@@ -205,13 +207,14 @@ export  default class registerPartner extends React.Component{
             )}
           </div>
           <div className="password">
-            <label htmlFor="password">Password</label>
-            <input
+            {/* <label htmlFor="password">Password</label> */}
+            <TextField
               className={formErrors.password.length > 0 ? "error" : null}
-              placeholder="Password"
+              label="Password"
               type="password"
               name="password"
               noValidate
+              required
               onChange={this.handleChange}
             />
             {formErrors.password.length > 0 && (

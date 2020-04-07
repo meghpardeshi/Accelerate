@@ -1,4 +1,4 @@
-
+import TextField from "@material-ui/core/TextField";
 import React from 'react';
 const emailRegex = RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -70,10 +70,10 @@ export  default class registerUser extends React.Component{
         formErrors.firstName =
           value.length < 3 ? "minimum 3 characaters required" : "";
         break;
-      case "lastName":
-        formErrors.lastName =
-          value.length < 3 ? "minimum 3 characaters required" : "";
-        break;
+      // case "lastName":
+      //   formErrors.lastName =
+      //     value.length < 3 ? "minimum 3 characaters required" : "";
+      //   break;
       case "email":
         formErrors.email = emailRegex.test(value)
           ? ""
@@ -100,21 +100,22 @@ export  default class registerUser extends React.Component{
       <div className="form-wrapper">
         <h1>Create Account For Users</h1>
         <form onSubmit={this.handleSubmit} noValidate>
-          <div className="firstName">
-            <label htmlFor="firstName">First Name</label>
-            <input
+          <div className="email">
+            {/* <label htmlFor="firstName">First Name</label> */}
+            <TextField
               className={formErrors.firstName.length > 0 ? "error" : null}
-              placeholder="First Name"
+              label="Full Name"
               type="text"
               name="firstName"
               noValidate
+              required
               onChange={this.handleChange}
             />
             {formErrors.firstName.length > 0 && (
               <span className="errorMessage">{formErrors.firstName}</span>
             )}
           </div>
-          <div className="lastName">
+          {/* <div className="lastName">
             <label htmlFor="lastName">Last Name</label>
             <input
               className={formErrors.lastName.length > 0 ? "error" : null}
@@ -127,14 +128,15 @@ export  default class registerUser extends React.Component{
             {formErrors.lastName.length > 0 && (
               <span className="errorMessage">{formErrors.lastName}</span>
             )}
-          </div>
+          </div> */}
           <div className="email">
-            <label htmlFor="email">Email</label>
-            <input
+            {/* <label htmlFor="email">Email</label> */}
+            <TextField
               className={formErrors.email.length > 0 ? "error" : null}
-              placeholder="Email"
+              label="Email"
               type="email"
               name="email"
+              required
               noValidate
               onChange={this.handleChange}
             />
@@ -143,13 +145,14 @@ export  default class registerUser extends React.Component{
             )}
           </div>
           <div className="password">
-            <label htmlFor="password">Password</label>
-            <input
+            {/* <label htmlFor="password">Password</label> */}
+            <TextField
               className={formErrors.password.length > 0 ? "error" : null}
-              placeholder="Password"
+              label="Password"
               type="password"
               name="password"
               noValidate
+              required
               onChange={this.handleChange}
             />
             {formErrors.password.length > 0 && (
@@ -157,13 +160,14 @@ export  default class registerUser extends React.Component{
             )}
           </div>
           <div className="phoneNumber">
-            <label htmlFor="phoneNumber">Mobile Number</label>
-            <input
+            {/* <label htmlFor="phoneNumber">Mobile Number</label> */}
+            <TextField
               className={formErrors.phoneNumber.length > 0 ? "error" : null}
-              placeholder="Mobile Number"
-              type="text"
+              label="Mobile Number"
+              type="number"
               name="phoneNumber"
               noValidate
+              required
               onChange={this.handleChange}
             />
             {formErrors.email.length > 0 && (
