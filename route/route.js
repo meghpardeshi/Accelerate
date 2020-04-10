@@ -18,7 +18,7 @@ console.log('db connected');
 
 // method to register users
 
-router.post('/users',upload.array('filess'),function(req,res){
+router.post('/users',upload.array('files'),function(req,res){
 	console.log('request data for registration ',req.body);
 	console.log('services '+req.body.name);
 	//console.log(req.files);
