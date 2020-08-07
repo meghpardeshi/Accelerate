@@ -47,6 +47,14 @@
     margin-left: 0px;
 }
 
+.dropDown{
+    width: 600px;
+}
+@media only screen and (max-width: 768px) {
+    .dropDown{
+        width: 300px;
+    }
+  }
 
 
 /* .root {

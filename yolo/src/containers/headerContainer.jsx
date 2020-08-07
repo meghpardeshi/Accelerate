@@ -1,5 +1,7 @@
 import React from 'react';
 import Header from '../components/shared/Header/Header';
+import HeaderLinks from '../components/shared/Header/HeaderLinks';
+
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as searchProviderByName from '../actions/searchByNameAction';
@@ -9,12 +11,16 @@ import * as financialServicesAction from '../actions/getFinancialServiceAction';
 
 class HeaderContainer extends React.Component {
     render() {
-        return <Header 
-            searchByName = {this.props.searchByName} 
-            getCountriesList = {this.props.getCountriesList}
-            getBusinessTypes = {this.props.getBusinessTypes}
-            getFinancialServices = {this.props.getFinancialServices}
-        />
+        return <Header
+        brand=""
+        rightLinks={<HeaderLinks />}
+        fixed
+        color="black"
+        changeColorOnScroll={{
+          height: 400,
+          color: "white"
+        }}
+      />
     }
     
 }

@@ -11,6 +11,7 @@ class ProviderRegisterContainer extends React.Component {
     render() {
         return(
             <ProviderRegister 
+            
                 getFinancialServiceList={this.props.getFinancialServiceList}
                 getBusinessTypeList={this.props.getBusinessTypeList}
                 getCountriesList={this.props.getCountriesList}

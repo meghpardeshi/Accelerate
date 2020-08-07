@@ -15,7 +15,7 @@ import {
     Stepper, TextField, Grid, Typography,
     Paper, Select, Avatar,
     MenuItem, Chip, ExpansionPanel, ExpansionPanelActions,
-    Snackbar, Button, ExpansionPanelDetails
+    Snackbar, Button, ExpansionPanelDetails, InputAdornment, IconButton
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { history, store } from '../../store';
@@ -30,8 +30,14 @@ import Tab from '@material-ui/core/Tab';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Multiselect } from 'multiselect-react-dropdown';
 import { TreeViewComponent } from '@syncfusion/ej2-react-navigations';
-
+import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import { enableRipple } from '@syncfusion/ej2-base';
+import GridContainer from '../Grid/GridContainer';
+import GridItem from '../Grid/GridItem';
+import GroupIcon from '@material-ui/icons/Group';
+import MailIcon from '@material-ui/icons/Mail';
+import PhoneIcon from '@material-ui/icons/Phone';
+
 enableRipple(true);
 
 //from ramids
@@ -184,6 +190,7 @@ export default class ProviderRegister extends React.Component {
         })
     }
 
+    
 
 
     change = (e) => {
@@ -478,12 +485,14 @@ export default class ProviderRegister extends React.Component {
        
         if(this.state.activeStep === 3) {
             return(
-                <Paper style={{height:500}}>
+                <Paper elevation={3} style={{ padding:50, minHeight: 500 }}>
                     <h4>Please provide your service type details</h4>
-                    <div style={{display: 'inline-flex'}}>
-                        <div>
-                            <Paper style={{width: 800, marginBottom: 50}}>
-                    <ExpansionPanel style={{width:800}}>
+
+                    <div style={{height: "10px",display: "block"}}></div>
+
+                    <GridContainer>
+                            <GridItem>
+                            <ExpansionPanel style={{width: "100%"}}>
                         <ExpansionPanelSummary expandIcon={<Icon className="fa fa-sort-desc" aria-hidden="true"/>}>
                             <Typography>{"For Individual"}</Typography>
                         </ExpansionPanelSummary>
@@ -495,8 +504,13 @@ export default class ProviderRegister extends React.Component {
                            
                         </ExpansionPanelSummary>
                     </ExpansionPanel>
+                            </GridItem>
+                        </GridContainer>
+                        <div style={{height: "10px",display: "block"}}></div>
 
-                    <ExpansionPanel style={{width:800}}>
+                        <GridContainer>
+                            <GridItem>
+                            <ExpansionPanel style={{width: "100%"}}>
                         <ExpansionPanelSummary expandIcon={<Icon className="fa fa-sort-desc" aria-hidden="true"/>}>
                             <Typography>{"For business"}</Typography>
                         </ExpansionPanelSummary>
@@ -508,9 +522,10 @@ export default class ProviderRegister extends React.Component {
                             </div>
                         </ExpansionPanelSummary>
                     </ExpansionPanel>
-                </Paper>
-                </div>
-                </div><br/>
+                            </GridItem>
+                        </GridContainer>
+                
+                        <div style={{height: "30px",display: "block"}}></div>
                 <Button disabled={this.state.activeStep === 0} onClick={this.handleBack} 
                         style={{marginRight:30}} variant="outlined"
                     >Back</Button>
@@ -528,9 +543,9 @@ export default class ProviderRegister extends React.Component {
         }
         if (this.state.activeStep === 2) {
             return (
-                <Paper style={{ height: 500 }}>
+                <Paper elevation={3} style={{ padding:50, minHeight: 500 }}>
                     <h4>Enter your Organization Services</h4>
-                    <Paper className={this.classes.root}>
+                    <div className={this.classes.root}>
                         <Tabs
                             value={this.state.value}
                             onChange={this.handleChange}
@@ -541,7 +556,7 @@ export default class ProviderRegister extends React.Component {
                             <Tab label="Select your service Type" />
                             <Tab label="Select your Expertise" />
                         </Tabs>
-                    </Paper>
+                    </div>
                     {
                         this.state.value !== 1 ?
                         <div style={{ display: 'inline-flex', marginBottom: 50 }}>
@@ -572,7 +587,7 @@ export default class ProviderRegister extends React.Component {
                                                 {option}
                                             </React.Fragment>
                                         )}
-                                        style={{ width: 600 }}
+                                        className = "dropDown"
                                         renderInput={(params) => (
                                             <TextField {...params} variant="outlined" label="Select your service Type" placeholder="services" />
                                         )}
@@ -602,7 +617,7 @@ export default class ProviderRegister extends React.Component {
                                         {option.name}
                                     </React.Fragment>
                                 )}
-                                style={{ width: 600 }}
+                                className = "dropDown"
                                 renderInput={(params) => (
                                     <TextField {...params} variant="outlined" label="Please Select your Expertise" placeholder="Expertise" />
                                 )}
@@ -627,26 +642,40 @@ export default class ProviderRegister extends React.Component {
             )
         } if (this.state.activeStep === 0) {
             return (
-                <Paper style={{ marginLeft: 150, height: 500 }}>
+                <Paper elevation={3} style={{ padding:50, minHeight: 500 }}>
                     <h4>Please provide your personal details</h4>
                     <Container maxWidth="sm" style={{ marginBottom: 30 }}>
                         <form noValidate autoCapitalize="off">
-                            <TextField
+                            <GridContainer>
+                                <GridItem xs={12} sm={12} md={6}>
+                                    <span style={{float:"left"}}>First Name <sup style={{color:"red"}}>*</sup></span>
+                                <TextField
                                 id="firstName"
-                                label="Please enter your first Name"
+                                placeholder="Enter First Name.."
                                 fullWidth
                                 type="text"
                                 required
                                 name="firstName"
+                                
                                 error={this.state.errors.firstName}
                                 helperText={this.state.errors.firstName}
                                 autoFocus
                                 onChange={(e) => this.change(e)}
                                 value={this.state.firstName}
+                                variant="outlined"
+                                InputProps={{
+                                    endAdornment:
+                                    <InputAdornment position="end">
+                                      <PermIdentityIcon/>
+                                    </InputAdornment>,
+                                  }}
                             />
-                            <TextField
+                                </GridItem>
+                                <GridItem xs={12} sm={12} md={6}> 
+                                <span style={{float:"left"}}>Last Name <sup style={{color:"red"}}>*</sup></span>
+                                <TextField
                                 id="lastName"
-                                label="Please enter your last Name"
+                                placeholder="Enter Last Name"
                                 fullWidth
                                 type="text"
                                 required
@@ -655,10 +684,23 @@ export default class ProviderRegister extends React.Component {
                                 helperText={this.state.errors.lastName}
                                 onChange={(e) => this.change(e)}
                                 value={this.state.lastName}
+                                variant="outlined"
+                                InputProps={{
+                                    endAdornment:
+                                    <InputAdornment position="end">
+                                      <GroupIcon/>
+                                    </InputAdornment>,
+                                  }}
                             />
+                                </GridItem>
+                            </GridContainer>
+                            <div style={{height: "10px",display: "block"}}></div>
+                            <GridContainer>
+                            <GridItem xs={12} sm={12} md={12}>
+                            <span style={{float:"left"}}>Email Address <sup style={{color:"red"}}>*</sup></span>
                             <TextField
                                 id="email"
-                                label="Please enter your Email Address"
+                                placeholder="Enter Email Address"
                                 fullWidth
                                 type="email"
                                 required
@@ -667,10 +709,25 @@ export default class ProviderRegister extends React.Component {
                                 helperText={this.state.errors.email}
                                 onChange={(e) => this.change(e)}
                                 value={this.state.email}
+                                variant="outlined"
+                                InputProps={{
+                                    endAdornment:
+                                    <InputAdornment position="end">
+                                      <MailIcon/>
+                                    </InputAdornment>,
+                                  }}
                             />
-                            <TextField
+                            </GridItem>
+                            </GridContainer>
+                            
+                            <div style={{height: "10px",display: "block"}}></div>
+                            <GridContainer>
+                                <GridItem xs={12} sm={12} md={6}>
+                                <span style={{float:"left"}}>Password <sup style={{color:"red"}}>*</sup></span>
+
+                                <TextField
                                 id="password"
-                                label="Please enter your password"
+                                placeholder="Enter Password"
                                 fullWidth
                                 type="password"
                                 required
@@ -679,10 +736,18 @@ export default class ProviderRegister extends React.Component {
                                 helperText={this.state.errors.password}
                                 onChange={(e) => this.change(e)}
                                 value={this.state.password}
+                                variant="outlined"
+                                
+                                      
                             />
-                            <TextField
+
+                                </GridItem>
+                                <GridItem xs={12} sm={12} md={6}>
+                                <span style={{float:"left"}}>Re-Enter Password <sup style={{color:"red"}}>*</sup></span>
+
+                                <TextField
                                 id="confirmPassword"
-                                label="Please re-enter your password"
+                                placeholder="Re-enter Password"
                                 fullWidth
                                 type="password"
                                 required
@@ -691,23 +756,44 @@ export default class ProviderRegister extends React.Component {
                                 helperText={this.state.errors.confirmPassword}
                                 onChange={(e) => this.change(e)}
                                 value={this.state.confirmPassword}
+                                variant="outlined"
                             />
-                            <Grid item xs={4} style={{ display: 'flex' }}>
+                                </GridItem>
+
+                            </GridContainer>
+                            
+                           
+                            <div style={{height: "10px",display: "block"}}>
+                            </div>
+                       <GridContainer>
+                       <GridItem xs={6} sm={6} md={6} >
+                       <span style={{float:"left"}}>Phone Number <sup style={{color:"red"}}>*</sup></span>
+                       </GridItem>
+
+                       </GridContainer>
+
+                            <GridContainer>
+
+                                <GridItem xs={12} sm={12} md={3} >
                                 <Select
+                                fullwidth
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-sßelect"
                                     value={this.state.country_code}
-                                    style={{ minWidth: 150 }}
-                                >
+                                    variant="outlined"
+                                    style={{ minWidth: 120 }}>
                                     {
                                         (this.state.countries && this.state.countries.length) ? this.state.countries.map((item, index) => {
                                             return <MenuItem key={index} value={item.dial_code} onClick={(e) => this.handleAccessCode(e)}>{item.dial_code}</MenuItem>
                                         }) : <span>Loading</span>
                                     }
                                 </Select>
+                                </GridItem>
+                                <GridItem xs={12} sm={12} md={9}> 
+
                                 <TextField
                                     id="phone_number"
-                                    label="Enter your Phone number"
+                                    placeholder="Enter Phone number.."
                                     name="phoneNumber"
                                     fullWidth
                                     type="number"
@@ -715,11 +801,20 @@ export default class ProviderRegister extends React.Component {
                                     helperText={this.state.errors.phoneNumber}
                                     autoFocus
                                     required
-                                    style={{ minWidth: 400 }}
                                     onChange={(e) => this.change(e)}
                                     value={this.state.phoneNumber}
+                                    variant="outlined"
+                                    InputProps={{
+                                        endAdornment:
+                                        <InputAdornment position="end">
+                                          <PhoneIcon/>
+                                        </InputAdornment>,
+                                      }}
                                 />
-                            </Grid>
+                                </GridItem>
+                            </GridContainer>
+
+                           
                         </form>
                     </Container>
                     <Button
@@ -736,66 +831,109 @@ export default class ProviderRegister extends React.Component {
             )
         } if (this.state.activeStep === 1) {
             return (
-                <Paper >
+                <Paper elevation={3} style={{ padding:50, minHeight: 500 }}>
                     <h4>Please provide your Organization Details</h4>
                     <Container maxWidth="sm" style={{ marginBottom: 50 }}>
                         <form noValidate autoCapitalize="off">
-                            <TextField
+                            <GridContainer>
+                                <GridItem xs={12} sm={12} md = {12}> 
+                                <span style={{float:"left"}}>Organization Name <sup style={{color:"red"}}>*</sup></span>
+
+                                <TextField
                                 fullWidth
                                 type="text"
                                 required
-                                label="Enter your Organization Name (As per goverment fillings)"
+                                placeholder="Enter Organization Name (As per goverment fillings)"
                                 id="OrgName"
                                 name="OrgName"
                                 error={this.state.errors.OrgName}
                                 helperText={this.state.errors.OrgName}
                                 autoFocus
+                                variant="outlined"
                                 onChange={(e) => this.change(e)}
                                 value={this.state.OrgName}
                             />
-                            <TextField
+                                </GridItem>
+                                </GridContainer>
+                                <div style={{height: "10px",display: "block"}}></div>
+
+                            <GridContainer>
+                                <GridItem xs={12} sm={12} md = {12}>
+                                <span style={{float:"left"}}>Organization Address <sup style={{color:"red"}}>*</sup></span>
+
+                                <TextField
                                 fullWidth
-                                label="Enter your Organization Address"
+                                placeholder="Enter Organization Address"
                                 type="text"
                                 required
                                 id="OrgAddress"
                                 name="OrgAddress"
+                                variant="outlined"
                                 error={this.state.errors.OrgAddress}
                                 helperText={this.state.errors.OrgAddress}
                                 onChange={(e) => this.change(e)}
                                 value={this.state.OrgAddress}
                             />
-                            <TextField
+                                </GridItem>
+                            </GridContainer>
+                            <div style={{height: "10px",display: "block"}}></div>
+
+                           <GridContainer>
+                               <GridItem xs={12} sm={12} md={6}>
+                               <span style={{float:"left"}}>Fee<sup style={{color:"red"}}>*</sup></span>
+
+                               <TextField
                                 fullWidth
-                                label="Enter your Fees"
+                                placeholder="Enter your Fees"
                                 type="text"
                                 required
+                                variant="outlined"
                                 id="Fees"
                                 name="Fees"
                                 onChange={(e) => this.change(e)}
                                 value={this.state.Fees}
                             />
-                            
-                            <div>
-                                <div>
-                                    <Select id="countriesLabel"
+                               </GridItem>
+                               <GridItem xs={12} sm={12} md={6}>
+                               <span style={{float:"left"}}>Pincode<sup style={{color:"red"}}>*</sup></span>
+
+                               <TextField
+                                fullWidth
+                                placeholder="Enter Your Pincode.."
+                                type="text"
+                                required
+                                id="PinCode"
+                                name="PinCode"                                
+                                variant="outlined"
+                                onChange={(e) => this.change(e)}
+                                value={this.state.PinCode}
+                            /> 
+                               </GridItem>
+                           </GridContainer>
+
+                           <div style={{height: "10px",display: "block"}}></div>
+                           <GridContainer>
+                               <GridItem xs={12} sm={12} md={6}>
+                               <span style={{float:"left"}}>Country<sup style={{color:"red"}}>*</sup></span>
+
+                               <Select id="countriesLabel"
+                               variant="outlined"
                                 labelId="demo-simple-select-label"
-                                style={{ minWidth: 550 }}
-                                value={this.state.OrgCountry}
-                            >
+                                fullWidth
+                                value={this.state.OrgCountry}>
                                 {
                                     (this.state.countries && this.state.countries.length) ? this.state.countries.map((item, index) => {
                                         return <MenuItem key={index} value={item.name} onClick={(e) => this.handleCountrySelect(e)}>{item.name}</MenuItem>
                                     }) : <span>Loading...</span>
                                 }
                             </Select>
-
-                                </div>
-                                <div>
-                                <Select id="citiesLabel"
+                               </GridItem>
+                               <GridItem xs={12} sm={12} md={6}>
+                               <span style={{float:"left"}}>City<sup style={{color:"red"}}>*</sup></span>
+                               <Select id="citiesLabel"
                                 labelId="demo-simple-select-label"
-                                
-                                style={{ minWidth: 550 }}
+                                fullWidth
+                                variant="outlined"
                                 value={this.state.OrgCity}
                             >
                                          
@@ -806,11 +944,17 @@ export default class ProviderRegister extends React.Component {
                                 }
                             </Select>
 
-                                </div>
-                            </div>
-                             <TextField
+                               </GridItem>
+                           </GridContainer>
+
+                           <div style={{height: "10px",display: "block"}}></div>
+                            <GridContainer>
+                                <GridItem xs={12} sm={12} md={12}>
+                                <span style={{float:"left"}}>Address Line 1<sup style={{color:"red"}}>*</sup></span>
+                                <TextField
                                 fullWidth
-                                label="Address Line 1"
+                                variant="outlined"
+                                placeholder="Address Line 1"
                                 type="text"
                                 required
                                 id="ALine1"
@@ -818,9 +962,17 @@ export default class ProviderRegister extends React.Component {
                                 onChange={(e) => this.change(e)}
                                 value={this.state.ALine1}
                             /> 
-                             <TextField
+                                </GridItem>
+                            </GridContainer>
+
+                            <div style={{height: "10px",display: "block"}}></div>
+                            <GridContainer>
+                                <GridItem xs={12} sm={12} md={12}>
+                                <span style={{float:"left"}}>Address Line 2<sup style={{color:"red"}}>*</sup></span>
+                                <TextField
                                 fullWidth
-                                label="Address Line 2"
+                                variant="outlined"
+                                placeholder="Address Line 2"
                                 type="text"
                                 required
                                 id="ALine2"
@@ -828,19 +980,17 @@ export default class ProviderRegister extends React.Component {
                                 onChange={(e) => this.change(e)}
                                 value={this.state.ALine2}
                             /> 
-                            <TextField
+                                </GridItem>
+                            </GridContainer>
+
+                            <div style={{height: "10px",display: "block"}}></div>
+                            <GridContainer>
+                                <GridItem xs={12} sm={12} md={12}>
+                                <span style={{float:"left"}}>Organization Registation Number<sup style={{color:"red"}}>*</sup></span>
+                                <TextField
                                 fullWidth
-                                label="Please Enter Your PinCode"
-                                type="text"
-                                required
-                                id="PinCode"
-                                name="PinCode"
-                                onChange={(e) => this.change(e)}
-                                value={this.state.PinCode}
-                            /> 
-                            <TextField
-                                fullWidth
-                                label="Enter your Organization Registation Number"
+                                variant="outlined"
+                                placeholder="Enter your Organization Registation Number"
                                 type="text"
                                 required
                                 id="OrgRegNumber"
@@ -850,9 +1000,17 @@ export default class ProviderRegister extends React.Component {
                                 onChange={(e) => this.change(e)}
                                 value={this.state.OrgRegNumber}
                             />
-                            <TextField
+                                </GridItem>
+                            </GridContainer>
+
+                            <div style={{height: "10px",display: "block"}}></div>
+                            <GridContainer>
+                                <GridItem xs={12} sm={12} md={12}>
+                                <span style={{float:"left"}}>Type of Registration<sup style={{color:"red"}}>*</sup></span>
+                                <TextField
                                 fullWidth
-                                label="Enter type of registation"
+                                variant="outlined"
+                                placeholder="Enter Type of Registration"
                                 type="text"
                                 required
                                 name="OrgPINType"
@@ -862,8 +1020,12 @@ export default class ProviderRegister extends React.Component {
                                 style={{ marginBottom: 40 }}
                                 value={this.state.OrgPINType}
                             />
-                            <Grid item xs={4} style={{ display: 'flex' }}>
-                                <label>Provide Your Profile Picture</label>
+                                </GridItem>
+                            </GridContainer>
+
+                            <GridContainer>
+                                <GridItem>
+                                <span style={{float:"left"}}>Provide Your Profile Picture</span>
                                 <input
                                     accept="image/*"
                                     id="raised-button-file"
@@ -871,7 +1033,10 @@ export default class ProviderRegister extends React.Component {
                                     type="file"
                                     onChange={(e) => { this.name(e) }}
                                 />
-                            </Grid>
+                                </GridItem>
+                            </GridContainer>
+                            
+                           
                         </form>
                     </Container>
                     <Button
@@ -892,7 +1057,7 @@ export default class ProviderRegister extends React.Component {
 
     render() {
         return (
-            <div>
+            <div >
                 <HeaderContainer />
                 <Paper className="stepperShrink">
                     <Stepper activeStep={this.state.activeStep} alternativeLabel elevation={0}>
@@ -907,10 +1072,16 @@ export default class ProviderRegister extends React.Component {
                         }
                     </Stepper>
                 </Paper>
-                <div className="shrink">
-                    {
+                <div className="shrink" >
+                    <GridContainer spacing={0} direction="column" alignItems="center" justify="center">
+                        <GridItem xs={12} sm ={12} md = {8}> 
+                        {
                         this.getStepperContent()
                     }
+                        </GridItem>
+                    </GridContainer>
+                    
+                    
                 </div>
                 <Snackbar
                     anchorOrigin={{

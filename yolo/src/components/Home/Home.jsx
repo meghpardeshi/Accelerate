@@ -5,6 +5,8 @@ import {
     Card, Avatar, CardActionArea,
 } from '@material-ui/core';
 import './Home.css';
+import classNames from "classnames";
+
 import { Rating } from '@material-ui/lab';
 import { store } from '../../store';
 import CardErrorBoundary from '../shared/CardErrorBoundary';
@@ -12,8 +14,47 @@ import log from '../../utils/logger.service'
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import {Link} from 'react-router-dom';
 import { classList } from '@syncfusion/ej2-base';
+import Parallax from '../Parallax/Parallax'
+import GridContainer from '../Grid/GridContainer'
+import GridItem from '../Grid/GridItem'
+import { withStyles } from "@material-ui/core/styles";
+import styles from "../../assets/jss/material-kit-react/views/components.js";
+import CountrySelect from "../select/country";
+import HomeProviders from '../Home/HomeProviders'
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import Typography from '@material-ui/core/Typography';
+import Sharefunctionality from './Sharefunctionality';
+import WorkIcon from '@material-ui/icons/Work';
+import Tooltip from '@material-ui/core/Tooltip';
+import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
+import Contact_modal from './Contact_modal';
+import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 
-export default class Home extends React.Component {
+var media ={
+    height: '70px', width: '70px',
+    borderRadius: '50%', align: 'center',
+    border: '3px solid #f2f2f2',
+    boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)'
+  }
+
+  var share_link={}
+var modal_data_1={}
+var modal_data_2={}
+var modal_data_3={}
+var share_email={}
+
+const HtmlTooltip = withStyles((theme) => ({
+    tooltip: {
+      backgroundColor: '#f5f5f9',
+      color: 'rgba(0, 0, 0, 0.87)',
+      padding: '2px 5px 2px 5px',
+      fontSize: theme.typography.pxToRem(12),
+      border: '1px solid #dadde9',
+    },
+  }))(Tooltip);
+
+class Home extends React.Component {
     constructor(props) {
         super();
         this.state = {
@@ -69,62 +110,189 @@ export default class Home extends React.Component {
     }
 
     render() {
+        const { classes } = this.props;
         return(
             <div>
                 <HeaderContainer />
-                <Grid container spacing={24} style={{marginTop:200, marginLeft: 200}}>
+                <Parallax image={require("../../assets/img/newbg.jpg")}>
+                    <div className={classes.container}>
+                    <GridContainer>
+                        <GridItem>
+                        <div className={classes.brand}>
+                            <CountrySelect/>
+                        </div>
+                        </GridItem>
+                    </GridContainer>
+                    </div>
+                </Parallax>
+
+                <div className={classNames(classes.main, classes.mainRaised)} style={{padding: 2, backgroundColor:"#F8F8F8" }}>
+            
+                <Grid container spacing={2} xs={12} style={{marginTop:70}} >
+                    <div class="grid_row" >
                     {
                         (this.state.providerData && this.state.providerData.length) ? this.state.providerData.map((itemz, index)=> {
+
+
                             return (
-                        <div className ="Column">
-                        <div className="profile_container">
-                        <div className="profile_card">
 
-                        <div className="profile_img">
-                             <img src ={itemz.providerIdentityImg} ></img> 
-                        </div>
-                        
-                        <div className="profile_company">
-                            <p>{itemz.OrganizationName}</p>
-                        </div>
+                            <div class="cardd" style={{backgroundColor:"#FFF" }}>    
 
-                        <div className="profile_company">
-                            <p>{itemz.partnerId}</p>
-                        </div>
+                            <div class="header_element">
 
-                        <div className="profile_title">
-                            <p>{itemz.fullName}</p>
+                                <div class="left_header"> 
 
-                            <CheckCircleOutlineIcon style={{ color: 'green' }}></CheckCircleOutlineIcon>
-                        </div>
-                        
-                        <div className="profile_desc">
-                             <p>Expertise: {itemz.partnerType[0].name}</p> 
-                            <Link  to = {`/provider/profile?id=${itemz.partnerId}`}>See More</Link>
+                                    <img src={itemz.providerIdentityImg}  style={media}></img><br/>
+
+                                    {itemz.approved == true ? 
+                                    (
+                                        <CheckCircleIcon style={{ backgroundColor: '#fff',color: '#0077b3', fontSize: '16px',border: '1px solid #fff', borderRadius: '50%', marginTop: '-22px'}}/>
+                                    )
+                                    :
+                                    (
+                                        <span style={{ marginTop: '-22px'}}>.</span>
+                                    )
+                                    }
+    
+
+                                </div>
+
+                                <div class="right_header">
+
+                                    <Typography variant="body2" color="textprimary" style={{fontSize: '14px'}}>
+                                        {itemz.fullName}&nbsp;  
+                                        <span style={{display: 'none'}}>{share_link=`/provider/profile?id=${itemz.partnerId}`}</span>
+                                        <span style={{display: 'none'}}>{share_email=`http://mailto:${itemz.email}`}</span>
+
+                                        <Link style={{float: 'right', marginRight:'15px', color: '#4d4d4d'}} ><Sharefunctionality b1={share_email} brand={share_link} style={{fontSize: '12px'}}/></Link>   
+                                    </Typography>
+                                    
+                                    <Typography variant="caption"  component="p" style={{fontSize: '12px' , color: '#808080'}}>
+                                        <WorkIcon style={{fontSize: '11px', marginTop: '-2px'}}/> 
+                                        &nbsp;
+                                        {itemz.OrganizationName.substr(0, 11)} 
+
+                                        {itemz.OrganizationName.length > 8 ? 
+                                            (
+                                        <HtmlTooltip
+                                            placement="top-start"
+                                            title={
+                                            <React.Fragment>
+                                            {itemz.OrganizationName}
+                                            </React.Fragment>
+                                            }
+                                            >
+                                            <Link underlineNone class="link_hover" style={{color: '#0077b3',textDecoration: 'none'}}>
+                                                ...
+                                            </Link> 
+                                            </HtmlTooltip>
+                                            )
+                                            :
+                                            (
+                                                ""
+                                            )
+                                        }
+                                        
+                                    </Typography>
+
+                                </div>
+                            </div>
+
+
+                            <div class="cardd_padding"> 
                             
-                        </div>
-                        
-                         
-                        <div className="profile_action">
-                            <Button color="secondary" size="small">Contact Us</Button>
-                            <Link to={`/provider/profile?id=${itemz.partnerId}`}>
-                            <Button color="primary" size="small">View Profile</Button>
+                            <Typography variant="body2" color="textPrimary" style={{fontSize: '13px'}}>
+                                {itemz.partnerId}
+                           </Typography>
+                           
+                            <Typography variant="caption" color="textSecondary" >
+                              {itemz.partnerType[0].name}
+
+                             
+                              {itemz.partnerType.length > 1 ? 
+                                (
+                                    <HtmlTooltip
+                                    placement="top-start"
+                                    title={
+                                    <React.Fragment>
+                                            
+                                        {itemz.partnerType!=undefined && itemz.partnerType.map((expertise)=>{
+                                            return(
+                                                <span>{expertise.name},&nbsp;</span>
+                                            )
+                                        })
+                                        }
+                                           
+                                        </React.Fragment>
+                                        }
+                                    >
+                                        <Link underlineNone style={{color: '#0077b3', textDecoration: 'none'}}>
+                                        &nbsp; &  more
+                                        </Link>
+                                    </HtmlTooltip>
+                                )
+                                :
+                                (
+                                    ""
+                                )
+                              }
+                            </Typography>             
+
+
+
+                            <Typography variant="caption" component="p" style={{fontSize: '12px', color: '#595959'}}> 
+                                Fees {itemz.Fees} &nbsp;
+                                <LocationOnOutlinedIcon style={{fontSize: '12px'}}/> {itemz.country}
+                            </Typography>
+
+                            
+                            <br/>
+                            <Link underlineNone class="link_hover" style={{color: '#4d4d4d'}} to={`/provider/profile?id=${itemz.partnerId}`}>
+                                View Profile
                             </Link>
+                            &nbsp;&nbsp;
+        
                             
-                        </div>
-                        <div className="profile_company">
-                            <p>Fees : $100</p>
-                        </div>
-                    </div>
-                    </div>
-                    </div>
+                            <Link underlineNone class="link_hover" style={{color: '#4d4d4d',textDecoration: 'none'}}>
+                                <span style={{display: 'none'}}>{modal_data_1=itemz.email}</span>
+                                <span style={{display: 'none'}}>{modal_data_2=itemz.mobileNumber}</span>
+                                <span style={{display: 'none'}}>{modal_data_3=itemz.country}</span>
 
-                                
+                                <Contact_modal m1={modal_data_1} m2={modal_data_2} m3={modal_data_3}/>
+                            </Link>
+
+                           
+
+                       
+
+                            {itemz.partnerType.length > 1 ? 
+                                (
+                                    <ThumbUpAltOutlinedIcon style={{float: 'right', fontSize: '14px', color: '#666666',cursor: 'pointer'}}/>
+                                )
+                                :
+                                (
+                                    <ThumbUpIcon style={{float: 'right', fontSize: '14px',color: '#0077b3', cursor: 'pointer'}}/>
+                                )
+                              }
+
+                            </div>  
+
+    
+
+                            </div>
+
+
+
+                                 
                         )
                         }) : <span>We do not have enough data right now. Please check back later.</span>
-                    }
-                </Grid>
-    
+                        }
+                    </div>    
+                </Grid>    
+                </div>
+
+
+
                 <Snackbar
                     anchorOrigin={{
                         vertical: 'bottom',
@@ -146,3 +314,5 @@ export default class Home extends React.Component {
         )
     }
 }
+
+export default withStyles(styles, { withTheme: true })(Home);
