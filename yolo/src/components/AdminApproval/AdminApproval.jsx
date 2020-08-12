@@ -57,10 +57,10 @@ export default class AdminApproval extends React.Component {
                             <ExpansionPanel key={index}>
                                 <ExpansionPanelSummary
                                     expandIcon={<Icon className="fa fa-sort-desc" aria-hidden="true"/>}>
-                                    <Typography>{item.OrganizationName}</Typography>
+                                    <Typography>Provider Id: {item.partnerId}</Typography>
                                 </ExpansionPanelSummary>
                                 <ExpansionPanelDetails>
-                                    <span>Organization Address: {item.OrganizationAddress}</span>
+                                    <span>Organization Name: {item.OrganizationName}</span>
                                 </ExpansionPanelDetails>
                                 <Divider />
                                 <ExpansionPanelActions>

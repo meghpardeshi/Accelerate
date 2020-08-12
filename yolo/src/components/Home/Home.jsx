@@ -38,7 +38,7 @@ var media ={
     boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)'
   }
 
-  var share_link={}
+var share_link={}
 var modal_data_1={}
 var modal_data_2={}
 var modal_data_3={}
@@ -66,6 +66,7 @@ class Home extends React.Component {
             name: ''
         }
     }
+    
     componentDidMount () {
         document.title = 'Welcome to Infosys - Yolo Network';
         this.props.getAllProvider();
@@ -192,6 +193,8 @@ class Home extends React.Component {
                                                 ""
                                             )
                                         }
+                                        <br/>
+                                        <LocationOnOutlinedIcon style={{fontSize: '12px'}}/> {itemz.country}
                                         
                                     </Typography>
 
@@ -242,7 +245,7 @@ class Home extends React.Component {
 
                             <Typography variant="caption" component="p" style={{fontSize: '12px', color: '#595959'}}> 
                                 Fees {itemz.Fees} &nbsp;
-                                <LocationOnOutlinedIcon style={{fontSize: '12px'}}/> {itemz.country}
+                                
                             </Typography>
 
                             

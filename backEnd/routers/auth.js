@@ -29,5 +29,5 @@ router.post('/provider/login', validatorMiddleware(providerLoginValidator), prov
 router.post('/provider/logout', JWTCertifier.verifyJWT, providerLogoutController.partnerLogout);
 router.post('/provider/password/forgot', validatorMiddleware(providerForgotPasswordSchema), providerForgotPasswordController.providerForgotPassword);
 router.post('/provider/password/reset', JWTCertifier.verifyJWT, validatorMiddleware(providerResetPasswordSchema), providerResetPasswordController.providerResetPassword);
-router.put('provider/update', JWTCertifier.verifyJWT, validatorMiddleware(providerUpdateSchema), providerUpdateController.updateProvider);
+router.put('/provider/update', JWTCertifier.verifyJWT, validatorMiddleware(providerUpdateSchema), providerUpdateController.updateProvider);
 module.exports = router;

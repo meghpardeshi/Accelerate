@@ -17,6 +17,7 @@ exports.adminRegister = (req, res) => {
                     adminId: uniqueIdGenerator.generateUniqueId(),
                     name: req.body.name,
                     email: req.body.email,
+                    phone_number: req.body.phone_number,
                     password: passwordValidator.generatePasswordHash(req.body.password),
                     role: 3
                 },(error, users)=> {

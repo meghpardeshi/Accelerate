@@ -8,7 +8,7 @@ import {
     USER_LOGIN_NETWORK_ACCESS_FAILURE
 } from '../types/auth';
 
-export function userLogin (email, password) {
+export function userLoginAction (email, password) {
     return(dispatch) => {
         dispatch(loading(true));
         return fetch('/api/auth/login', {
