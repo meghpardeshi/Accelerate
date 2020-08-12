@@ -44,6 +44,7 @@ export default class Login extends React.Component {
 
     login = (e) => {
         e.preventDefault();
+        {console.log('login props');console.log(this)}
         this.props.userLogin(this.state.email, this.state.password);
         store.subscribe(()=> {
             if(store.getState().userLogin.error) {
@@ -59,6 +60,7 @@ export default class Login extends React.Component {
                 this.setState({
                     open: false
                 });
+
                 window.localStorage.setItem('userProfile', true);
                 window.location.reload(false);
                 history.push('/dashboard');

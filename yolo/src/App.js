@@ -7,6 +7,7 @@ import RegisterContainer from './containers/userRegisterContainer';
 import ProviderLoginContainer from './containers/providerLoginContainer';
 import ProviderRegisterContainer from './containers/providerRegisterContainer';
 import ProviderDashboardContainer from './containers/providerDashboardContainer';
+import AdminRegisterContainer from './containers/adminRegisterContainer';
 import AdminLoginContainer from './containers/adminLoginContainer';
 import NotFound from './components/NotFound/NotFound';
 import HomeContainer from './containers/homeContainer';
@@ -126,6 +127,7 @@ function App() {
             <ProtectedRoute path="/dashboard" component={ Dashboard } />
             <ProtectedRoute path="/provider/dashboard" component= {ProviderDashboardContainer} />
             <ProtectedRoute path="/admin/dashboard" component= {AdminDashboardContainer} />
+            <Route exact path="/admin/register" component={AdminRegisterContainer} />
             
             <Route path="*" component={ NotFound } />
           </Switch>

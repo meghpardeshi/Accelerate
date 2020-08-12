@@ -14,7 +14,7 @@ exports.registerPartner = (req, res) => {
             res.status(400).json(err);
         } else {
             if(!users.length) {
-                console.log("Object Rcvd",req);
+                
                 providerModel.create({
                     partnerId: nameExtractor.getPartnerId(req.body.fullName,req.body.mobileNumber),
                     fullName: req.body.fullName,
@@ -34,8 +34,8 @@ exports.registerPartner = (req, res) => {
                     idType: req.body.idType,
                     servicesOffered: req.body.servicesOffered,
                     providerIdentityImg: req.body.providerIdentityImg,
-                    busChecked: req.body.busChecked,
-                    indChecked: req.body.indChecked,
+                    busChecked: req.body.busCheckedForAPI,
+                    indChecked: req.body.indCheckedForAPI,
                     partnerType: req.body.partnerType,
                 }, (error, partner)=> {
                     if(error) {

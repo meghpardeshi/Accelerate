@@ -43,6 +43,10 @@ const adminSchema = new mongoose.Schema({
             message: props => `${props.value} is not a valid email. Please use a valid email.`
         }
     },
+    phone_number: { 
+		type: String,
+		required: true 
+	},
     role: {
         type: Number,
         required: true,

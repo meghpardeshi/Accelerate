@@ -1,29 +1,30 @@
 /**
- * @fileoverview Action for Provider login.
+ * @fileoverview Action for register Admins.
  */
 
-import {
-    PROVIDER_LOGIN_LOADING_TOGGLE,
-    PROVIDER_LOGIN_IS_FAILURE, 
-    PROVIDER_LOGIN_IS_SUCCESS
-} from '../types/provider';
+import { 
+    LOADING_TOGGLE, 
+    NETWORK_ACCESS_FAILURE,
+    NETWORK_ACCESS_SUCCESS 
+} from '../types/auth';
 
-export function providerLogin(email, password) {
-    return (dispatch) => {
+export function registerAdmin (name, email, password, phone_number) {
+    return(dispatch) => {
         dispatch(loading(true));
-        return fetch('/api/auth/provider/login', {
+        return fetch('/api/admin/register', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({
+                name: name,
                 email: email,
-                password: password
+                password: password,
+                phone_number: phone_number
             })
-        }).then(res=> {
-            if(res.status === 200) {
-                return res.json().then(res=> {
-                    console.log("rsponse:", res)
+        }).then(res=>{
+            if(res.status === 201) {
+                return res.json().then(res=>{
                     dispatch(loading(false));
                     dispatch(isSuccess(res));
                 })
@@ -32,34 +33,34 @@ export function providerLogin(email, password) {
                 dispatch(isError('Something went wrong from our end. Please try again later.'))
             } else {
                 dispatch(loading(false));
-                return res.json().then(res=> {
+                return res.json().then(res=>{
                     dispatch(isError(res));
                 })
             }
-        }).catch(err=> {
+        }).catch(error=> {
             dispatch(loading(false));
-            dispatch(isError(err));
+            dispatch(isError(error));
         })
     }
 }
 
 export function loading(loading) {
     return {
-        type: PROVIDER_LOGIN_LOADING_TOGGLE,
+        type: LOADING_TOGGLE,
         payload: loading
     }
 }
 
 export function isSuccess(success) {
     return {
-        type: PROVIDER_LOGIN_IS_SUCCESS,
+        type: NETWORK_ACCESS_SUCCESS,
         payload: success
     }
 }
 
 export function isError(err) {
     return {
-        type: PROVIDER_LOGIN_IS_FAILURE,
+        type: NETWORK_ACCESS_FAILURE,
         payload: err
     }
 }

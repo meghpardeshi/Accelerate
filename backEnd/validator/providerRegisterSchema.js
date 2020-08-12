@@ -19,8 +19,8 @@ const providerRegisterSchema = joi.object().keys({
     servicesOffered: joi.array().required().exist(),
     providerIdentityImg: joi.string(),//.required().exist(),
     partnerType: joi.array().required().exist(),
-    busChecked: joi.array(),
-    indChecked: joi.array(),
+    busCheckedForAPI: joi.array(),
+    indCheckedForAPI: joi.array(),
     role: joi.number().optional().valid(2)
 })
 

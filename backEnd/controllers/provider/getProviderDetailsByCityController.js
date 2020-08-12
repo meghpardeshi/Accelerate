@@ -1,13 +1,13 @@
 /**
- * @fileoverview Controller for getting  provider by partnerId
+ * @fileoverview Controller for getting  provider by email
  * @author Jithin Zacharia
  */
 
 const provideModel = require('../../model/providerModel');
 
-exports.getProviderDetails = (req, res) => {
+exports.getProviderDetailsByCity = (req, res) => {
     
-    provideModel.findOne({partnerId:req.params.partnerId  }, (err, providers)=> {
+    provideModel.find({City:req.params.city}, (err, providers)=> {
         if(err) {
             res.status(400).json(err);
         } else {

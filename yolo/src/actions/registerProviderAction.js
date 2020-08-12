@@ -10,13 +10,14 @@ import {
 
 export function providerRegister(
     fullName, password, 
-    email, mobileNumber,Fees,country,City,ALine1,ALine2,
+    email, mobileNumber,Fees,City,country,ALine1,ALine2,
     PinCode,OrganizationName,OrganizationAddress, 
     OrganizationRegNumber, idType, 
     servicesOffered, providerIdentityImg, 
-    partnerType, indChecked, busChecked) {
+    partnerType, indCheckedForAPI, busCheckedForAPI) {
         return (dispatch) => {
-            dispatch(loading(true));
+            
+            //dispatch(loading(true));
             return fetch('/api/auth/provider/register', {
                 method: 'POST',
                 headers: {
@@ -37,8 +38,8 @@ export function providerRegister(
                     OrganizationAddress: OrganizationAddress,
                     OrganizationRegNumber: OrganizationRegNumber,
                     idType: idType,
-                    busChecked: busChecked,
-                    indChecked:indChecked,
+                    busCheckedForAPI: busCheckedForAPI,
+                    indCheckedForAPI:indCheckedForAPI,
                     servicesOffered: servicesOffered,
                     providerIdentityImg: providerIdentityImg,
                     partnerType: partnerType,
@@ -47,21 +48,25 @@ export function providerRegister(
                 
             }).then(res=> {
                 if(res.status === 201) {
+                    console.log('lets check it in res 201')
                     return res.json().then(res=> {
-                        dispatch(loading(false));
+                        //dispatch(loading(false));
                         dispatch(isSuccess(res));
                     })
                 } else if(res.status === 500) {
-                    dispatch(loading(false));
+                    console.log('lets check it in res 500')
+                   // dispatch(loading(false));
                     dispatch(isError('Something went wrong from our end. Please try again later.'))
                 } else {
-                    dispatch(loading(false));
+                    console.log('lets check it in res else')
+                    //dispatch(loading(false));
                     return res.json().then(res=> {
                         dispatch(isError(res));
                     })
                 }
             }).catch(err=> {
-                dispatch(loading(false));
+                console.log('lets check it in catch')
+                //dispatch(loading(false));
                 dispatch(isError(err));
             })
         }

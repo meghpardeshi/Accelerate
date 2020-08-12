@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../components/shared/Header/Header';
+import Header from '../components/shared/Header/Header2';
 import HeaderLinks from '../components/shared/Header/HeaderLinks';
 
 import { connect } from 'react-redux';

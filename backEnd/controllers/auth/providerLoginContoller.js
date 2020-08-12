@@ -25,9 +25,12 @@ exports.partnerLogin = (req, res) => {
                     user[0].fullName,
                     2
                 );
+                console.log('backend user data', user[0].partnerId)
                 res.status(200).json({
                     token,
-                    status: true
+                    status: true,
+                    providerId : user[0].partnerId,
+                    partnerData: user[0]
                 });
             }
         }

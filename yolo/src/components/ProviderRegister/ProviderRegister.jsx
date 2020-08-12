@@ -69,40 +69,33 @@ export default class ProviderRegister extends React.Component {
             ALine1: '',
             ALine2: '',
             PinCode: '',
-            // countries: [],
-            businessList: ['Business Incorporation', 'GST Service', 'Startup Serices', 'Legal Complaince Service', 'Tax Returns', 'Goverment Registration', 'Trademark', 'Miscelleneous Services'],
-            individualList: ['Tax returns', 'TDS', 'Legal', 'Miscelleneous Services'],
-            businessList1: [
-                { value: 'Business Incorporation', label: 'Business Incorporation' },
-                { value: 'strawberry', label: 'Strawberry' },
-                { value: 'vanilla', label: 'Vanilla' }
-            ],
-            countries: [
-                { id: 1, name: 'Australia', hasChild: true, expanded: true },
-                { id: 2, pid: 1, name: 'New South Wales' },
-                { id: 3, pid: 1, name: 'Victoria' },
-                { id: 4, pid: 1, name: 'South Australia' },
-                { id: 6, pid: 1, name: 'Western Australia' },
-                { id: 7, name: 'Brazil', hasChild: true },
-                { id: 8, pid: 7, name: 'Paraná' },
-                { id: 9, pid: 7, name: 'Ceará' },
-                { id: 10, pid: 7, name: 'Acre' },
-                { id: 11, name: 'China', hasChild: true },
-                { id: 12, pid: 11, name: 'Guangzhou' },
-                { id: 13, pid: 11, name: 'Shanghai' },
-                { id: 14, pid: 11, name: 'Beijing' },
-                { id: 15, pid: 11, name: 'Shantou' },
-                { id: 16, name: 'France', hasChild: true },
-                { id: 17, pid: 16, name: 'Pays de la Loire' },
-                { id: 18, pid: 16, name: 'Aquitaine' },
-                { id: 19, pid: 16, name: 'Brittany' },
-                { id: 20, pid: 16, name: 'Lorraine' },
-                { id: 21, name: 'India', hasChild: true },
-                { id: 22, pid: 21, name: 'Assam' },
-                { id: 23, pid: 21, name: 'Bihar' },
-                { id: 24, pid: 21, name: 'Tamil Nadu' },
-                { id: 25, pid: 21, name: 'Punjab' }
-            ],
+            
+            // countries: [
+            //     { id: 1, name: 'Australia', hasChild: true, expanded: true },
+            //     { id: 2, pid: 1, name: 'New South Wales' },
+            //     { id: 3, pid: 1, name: 'Victoria' },
+            //     { id: 4, pid: 1, name: 'South Australia' },
+            //     { id: 6, pid: 1, name: 'Western Australia' },
+            //     { id: 7, name: 'Brazil', hasChild: true },
+            //     { id: 8, pid: 7, name: 'Paraná' },
+            //     { id: 9, pid: 7, name: 'Ceará' },
+            //     { id: 10, pid: 7, name: 'Acre' },
+            //     { id: 11, name: 'China', hasChild: true },
+            //     { id: 12, pid: 11, name: 'Guangzhou' },
+            //     { id: 13, pid: 11, name: 'Shanghai' },
+            //     { id: 14, pid: 11, name: 'Beijing' },
+            //     { id: 15, pid: 11, name: 'Shantou' },
+            //     { id: 16, name: 'France', hasChild: true },
+            //     { id: 17, pid: 16, name: 'Pays de la Loire' },
+            //     { id: 18, pid: 16, name: 'Aquitaine' },
+            //     { id: 19, pid: 16, name: 'Brittany' },
+            //     { id: 20, pid: 16, name: 'Lorraine' },
+            //     { id: 21, name: 'India', hasChild: true },
+            //     { id: 22, pid: 21, name: 'Assam' },
+            //     { id: 23, pid: 21, name: 'Bihar' },
+            //     { id: 24, pid: 21, name: 'Tamil Nadu' },
+            //     { id: 25, pid: 21, name: 'Punjab' }
+            // ],
 
             field: { dataSource: this.countries, id: 'id', parentID: 'pid', text: 'name', hasChildren: 'hasChild' },
             indNodes: [],
@@ -112,6 +105,8 @@ export default class ProviderRegister extends React.Component {
             indChecked: [],
             indExpanded: [],
             busChecked: [],
+	    busCheckedForAPI: [],
+            indCheckedForAPI: [],
             busExpanded: [],
             checked: [],
             expanded: [],
@@ -194,6 +189,7 @@ export default class ProviderRegister extends React.Component {
 
 
     change = (e) => {
+        e.preventDefault()
         const { name, value } = e.target;
         let errors = this.state.errors;
         switch (name) {
@@ -381,7 +377,8 @@ export default class ProviderRegister extends React.Component {
 
     }
 
-    createOrganization = () => {
+    createOrganization = (e) => {
+        e.preventDefault();
         this.props.registerProvider(
             this.state.firstName + " " + this.state.lastName,
             this.state.password, this.state.email, this.state.phoneNumber,
@@ -391,14 +388,21 @@ export default class ProviderRegister extends React.Component {
             this.state.OrgAddress, this.state.OrgRegNumber,
             this.state.OrgPINType, this.state.actualServices,
             this.state.base64, this.state.OrgExpertise,
-	    this.state.indChecked, this.state.busChecked
+	    this.state.indCheckedForAPI,
+	     this.state.busCheckedForAPI
         );
         store.subscribe(() => {
+            console.log("error message-------->",store.getState().registerProvider.error)
+            console.log("success message-------->",store.getState().registerProvider.success)
             if (store.getState().registerProvider.error) {
                 this.setState({ open: true });
                 this.setState({ errorMessage: store.getState().registerProvider.error })
-            } else {
-                history.push('/provider/login');
+                //alert(this.state.errorMessage)
+            }  
+            if(store.getState().registerProvider.success) {
+               //alert('registration successful')
+               this.setState({ errorMessage: store.getState().registerProvider.success })
+               history.push('/provider/login');
             }
 
         })
@@ -431,13 +435,52 @@ export default class ProviderRegister extends React.Component {
         });
     }
 
+treeParse = (nodes, checkedArray) => {
+        const checked = [];
+        nodes.forEach(node => {
+            if (node.children) {
+                const chdd = [];
+                node.children.forEach(child => {
+                    if (child.children) {
+                        const grans = [];
+                        child.children.forEach(grand => {
+                            if (checkedArray.indexOf(grand.label) > -1)
+                            grans.push({
+                                label: grand.label, value: grand.label
+                            });
+                        });
+                        chdd.push({
+                            value: child.label, label: child.label, children: grans
+                        });
+                    }
+                });
+                checked.push({
+                    value: node.label, label: node.label, children: chdd
+                });
+            }
+        });
+        console.log('checked ', checked);
+        return checked;
+    } 
+
+    checkTreeProperty = (checkedArray, busCh) => {
+        console.log('bbgg ', checkedArray);
+        if (busCh) {
+            this.setState({busChecked: checkedArray});
+            this.setState({busCheckedForAPI: this.treeParse(this.state.busNodes, checkedArray)});
+        }
+        else {
+            this.setState({indChecked: checkedArray});
+            this.setState({indCheckedForAPI: this.treeParse(this.state.indNodes, checkedArray)});
+        }
+    }
  businessTreeCheck = () => {
         return (
             <CheckboxTree
                 nodes={this.state.busNodes}
                 checked={this.state.busChecked}
                 expanded={this.state.busExpanded}
-                onCheck={checked => this.setState({ busChecked: checked })}
+                onCheck={checked => this.checkTreeProperty(checked, true)}
                 onExpand={expanded => this.setState({ busExpanded: expanded })}
                 icons={{
                     check: <span className="rct-icon rct-icon-check" />,
@@ -461,7 +504,7 @@ export default class ProviderRegister extends React.Component {
                 nodes={this.state.indNodes}
                 checked={this.state.indChecked}
                 expanded={this.state.indExpanded}
-                onCheck={checked => this.setState({ indChecked: checked })}
+                onCheck={ch => this.checkTreeProperty(ch, false)}
                 onExpand={expanded => this.setState({ indExpanded: expanded })}
                 icons={{
                     check: <span className="rct-icon rct-icon-check" />,
