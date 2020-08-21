@@ -3,7 +3,7 @@ version: 0.2
 phases:
   install:
     commands:
-      # Install dependencies needed for running tests
+      # Install the dependencies needed for running tests
       - npm install
 
       # Upgrade AWS CLI to the latest version
