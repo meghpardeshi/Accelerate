@@ -1,0 +1,7 @@
+phases:
+ install:
+  commands: 
+   #install dependencies
+   -npm install
+   # upgrade aws cli
+   -pip install --upgrade awscli
